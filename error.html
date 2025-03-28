@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ff4d4d;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        a {
+            text-decoration: none;
+            color: white;
+            background: black;
+            padding: 10px;
+            display: inline-block;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Error</h1>
+        <p>{{ message }}</p>
+        <a href="/web/{{ session['username'] }}">Go Back</a>
+    </div>
+</body>
+</html>

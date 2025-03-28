@@ -1,0 +1,649 @@
+/* whole content */
+html, body {
+  height: 100%;
+  margin: 0; 
+  padding: 0; 
+}
+
+.content {
+  height: auto;    
+  overflow-y: scroll; 
+  scrollbar-width: none;      
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  border-radius: 10px;
+
+}
+/* log in and sign up design */
+.loginsignup2 {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-image: url('musci.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.loginsignup {
+  display: flex;
+  justify-content: center; /*horezonetalline*/
+  align-items: center; /*vertecalline*/
+  height: 100vh;
+}
+
+
+.loginsignup1 {
+  text-align: center;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+
+.loginsignup1 .input-container {
+  margin-bottom: 15px;
+}
+
+.loginsignup1 .input-container input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+
+.loginsignup1 .button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.loginsignup1 .button:hover {
+  background-color: #0056b3;
+}
+
+/*dashboard background */
+.dashboard {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-image: url('dashboard.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+/* katong error message kung mali anf user */
+.error-message {
+  color: red;
+  font-size: 14px;
+}
+
+/* kanang text na white ang color */
+.message3{
+  color: white;
+}
+
+
+/* password log in icon*/
+.password-container {
+  position: relative;
+}
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+.toggle-password img {
+  width: 100%;
+  height: 100%;
+}
+
+/* password sign up icon*/
+.password-container {
+  position: relative;
+}
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+.toggle-password img {
+  width: 100%;
+  height: 100%;
+}
+
+  /* Header with welcome & search bar side by side */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #2c6b87;
+  color: white;
+}
+  
+.header h1 {
+  font-size: 1.5rem;
+}
+  
+  /* The search bar in the header */
+.search-bar {
+  display: flex;
+  align-items: center;
+}
+  
+.search-bar button {
+  margin-left: 5px;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+.search-bar button:hover {
+  background-color: #0056b3;
+}
+.search-bar {
+  width: 100%;
+  margin-bottom: 20px;
+  text-align: center;
+}
+  
+.search-bar form {
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+}
+  
+.search-bar input {
+  width: 70%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px 0 0 5px;
+  font-size: 1rem;
+}
+  
+.search-bar button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+  
+.search-bar button:hover {
+  background-color: #0056b3;
+}
+  
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* genre part */
+.genrec {
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+.genrec[value="Pop"] {
+  background-color: #ff6f61;
+}
+
+.genrec[value="Rock"] {
+  background-color: #2e2e2e; 
+}
+
+.genrec[value="Jazz"] {
+  background-color: #6a5acd; 
+}
+
+.genrec[value="Classical"] {
+  background-color: #d4af37; 
+}
+.genrec[value="All Music"] {
+  background-color: blue; 
+}
+
+.genrec[value="Pop"]:hover {
+  background-color: #ff8367; 
+}
+
+.genrec[value="Rock"]:hover {
+  background-color: #4a4a4a; 
+}
+
+.genrec[value="Jazz"]:hover {
+  background-color: #7b68ee;
+}
+.genrec[value="Classical"]:hover {
+  background-color: #f0c75e;
+}
+.genrec[value="All Music"]:hover {
+  background-color: violet;
+}
+
+/* create playlist part or cover sa puti sa left side */
+.sidebar {
+  width: 400px;
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-right: 1px solid #eaeaea;
+}
+  
+.sidebar h2 {
+  font-size: 1.2rem;
+  color: #2c6b87;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+  
+.sidebar form, .sidebar .dropdown {
+  margin-bottom: 20px;
+  }
+
+.sidebar input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+  
+.sidebar button {
+  width: 100%;
+  padding: 10px;
+  background-color: #2c6b87;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+  
+.sidebar button:hover {
+  background-color: #1d4059;
+}
+
+/* ang mouse pointer sa genre mag dropdown and iyang part then gawas ang genre types */
+
+.dropdown {
+  position: relative;
+}
+  
+.dropdown-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #2c6b87;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+}
+  
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1;
+}
+  
+.dropdown-content button {
+  width: 100%;
+  padding: 10px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+}
+  
+.dropdown-content button:hover {
+  background-color: #f2f2f2;
+}
+  
+.dropdown:hover .dropdown-content {
+  display: block;
+  }
+
+/* kilid sa side bar or show music */
+.content {
+  width: 75%;
+  padding: 20px;
+}
+
+  
+  /* Music Results  */
+.music-results {
+  background-color: #f0f0f0;
+  padding: 15px;
+  border-radius: 5px;
+  color: #333;
+}
+  
+.music-item {
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 5px;
+}
+  
+/* Audio Element */
+.music-item audio {
+  width: 100%;
+  margin-top: 10px;
+}
+  
+/* Add-to-Playlist Form in Music Item */
+.music-item form {
+  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+}
+  
+.music-item select {
+  margin: 0 5px;
+  padding: 5px;
+}
+  
+.music-item button {
+  padding: 6px 12px;
+  background-color: #2c6b87;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+  
+.music-item button:hover {
+  background-color: #1a4a5b;
+}
+  
+/* Recent Played & Suggested Sections */
+.recent-played, .suggested-music {
+  margin-bottom: 20px;
+}
+  
+.recent-played ul, .suggested-music ul {
+  list-style: none;
+  padding-left: 20px;
+}
+  
+  /* Links Styling */
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+  
+a:hover {
+  text-decoration: underline;
+}
+
+.rc{
+  color: white;
+}
+
+.share-url {
+  width: 100%;
+  padding: 8px;
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+.copy-button, .share-friend-button {
+  padding: 8px 12px;
+  font-size: 1em;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+#errorMsg {
+  display: none;
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.notification {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(248, 215, 218, 0.95);
+  color: #721c24;
+  padding: 20px 30px;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  text-align: center;
+  z-index: 2000;
+}
+/* confirm */
+
+.confirm {
+  display: none; 
+  position: fixed; 
+  z-index: 3000; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  background-color: rgba(0,0,0,0.4); 
+}
+
+.confirmcontent {
+  background-color: #fff;
+  margin: 15% auto; 
+  padding: 20px;
+  border: 1px solid #888;
+  width: 300px; 
+  text-align: center;
+  border-radius: 8px;
+  position: relative;
+}
+
+.confirmcontent .close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.confirmcontent button {
+  padding: 8px 12px;
+  margin: 10px;
+  cursor: pointer;
+}
+ /* suggest music part */
+.suggested-music {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.suggested-music h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 5px;
+}
+
+.suggested-music ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.suggested-music ul li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+  transition: background 0.3s;
+}
+
+.suggested-music ul li:last-child {
+  border-bottom: none;
+}
+
+.suggested-music ul li:hover {
+  background-color: #ececec;
+}
+
+.song-info {
+  font-size: 16px;
+  color: #555;
+}
+
+.song-title {
+  font-weight: bold;
+}
+
+/* suggested music view more */
+.suggested-music .view-more {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #fff;
+  background-color: #007bff;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.suggested-music .view-more:hover {
+  background-color: #0056b3;
+}
+
+.no-songs {
+  text-align: center;
+  color: #999;
+  padding: 15px;
+}
+
+/* recnt played*/
+.recent-played {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.recent-played h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 5px;
+}
+
+.recent-played ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.recent-played ul li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+  transition: background 0.3s;
+}
+
+.recent-played ul li:last-child {
+  border-bottom: none;
+}
+
+.recent-played ul li:hover {
+  background-color: #ececec;
+}
+
+.song-info {
+  font-size: 16px;
+  color: #555;
+}
+
+.song-title {
+  font-weight: bold;
+}
+
+.song-artist, .song-genre {
+  font-style: italic;
+  color: #777;
+}
+
+.recent-played audio {
+  margin-left: 20px;
+  max-width: 200px;
+}
+
+.no-songs {
+  text-align: center;
+  color: #999;
+  padding: 15px;
+}
+.logout-button {
+  position: relative;
+  bottom: -100px;
+  width: 200px;
+  background-color: #d9534f;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  border-radius: 5px;
+
+
+}
+
+.logout-button:hover {
+  background-color: #c9302c;
+}

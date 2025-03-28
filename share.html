@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shared Playlist: {{ playlist_name }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='hehe.js') }}"></script>
+</head>
+<body class="dashboard">
+  <header class="header">
+    <h1>Shared Playlist: {{ playlist_name }}</h1>
+    <p>Created by: {{ username }}</p>
+  </header>
+  <div class="container">
+    <main class="content">
+      {% if songs %}
+        <ul>
+          {% for song in songs %}
+            <li>
+              <strong>{{ song.title }}</strong> by {{ song.artist }} ({{ song.genre }})
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>This playlist is currently empty.</p>
+      {% endif %}
+      <section>
+        <h3>Share this Playlist</h3>
+        <p>Copy the URL below to share this playlist:</p>
+        <input type="text" id="shareURL" class="share-url" value="{{ request.url }}" readonly onclick="this.select();">
+        <button class="copy-button" onclick="copyURL()">Copy URL</button>
+  
+        <button class="share-friend-button" onclick="shareWithFriend()">Share with Friend</button>
+      
+        <div id="errorMsg"></div>
+      </section>
+      <p>
+        <a href="{{ url_for('dashboard') }}">Return to Dashboard</a>
+      </p>
+    </main>
+  </div>
+    
+</body>
+</html>

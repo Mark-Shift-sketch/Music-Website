@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='hehe.js') }}"></script>
+  </head>
+  <body class="dashboard">
+    <header class="header">
+      <h1>Welcome to Music Website</h1>
+      <div class="search-bar">
+        <form action="{{ url_for('web_interface', username=session['username']) }}" method="get">
+          <input type="hidden" name="action" value="search">
+          <input type="text" name="query" placeholder="Search music or artist..." required>
+          <button type="submit">Search</button>
+        </form>
+      </div>
+    </header>
+    
+    <div class="container">
+      {% if message %}
+        <div id="notification" class="notification">{{ message }}</div>
+      {% endif %}
+
+      <div class="sidebar">
+        <h2>Create Playlist</h2>
+        <form action="/web/{{ session['username'] }}" method="get">
+          <input type="hidden" name="action" value="createplaylist" />
+          <input type="text" name="playlist_name" placeholder="Enter playlist name" required />
+          <button type="submit">Create Playlist</button>
+        </form>
+
+        <h2>Genre</h2>
+        <div class="dropdown">
+          <button class="dropdown-button">Choose Genre</button>
+          <div class="dropdown-content">
+            <form action="/web/{{ session['username'] }}" method="get">
+              <input type="hidden" name="action" value="genre" />
+              <button class="genrec" type="submit" name="genre" value="Pop">Pop</button>
+              <button class="genrec" type="submit" name="genre" value="Rock">Rock</button>
+              <button class="genrec" type="submit" name="genre" value="Jazz">Jazz</button>
+              <button class="genrec" type="submit" name="genre" value="Classical">Classical</button>
+              <button class="genrec" type="submit" name="genre" value="All Music">All Music</button>
+            </form>
+          </div>
+        </div>
+        
+        <h2>Your Playlists</h2>
+        {% if playlists %}
+          <ul>
+            {% for pl_name, pl_songs in playlists.items() %}
+              <li class="pcreated1">
+                <a href="{{ url_for('web_interface', username=session['username'], action='viewplaylist', playlist_name=pl_name) }}">
+                  {{ pl_name }} ({{ pl_songs|length }} song{{ pl_songs|length > 1 and 's' or '' }})
+                </a>
+                <a href="javascript:void(0);" onclick="showDeleteMiniwindow('{{ pl_name }}', '{{ url_for('web_interface', username=session['username'], action='deleteplaylist', playlist_name=pl_name) }}');"
+                   style="color:red; margin-left:10px;">Delete</a>
+                <a href="{{ url_for('share_playlist', username=session['username'], playlist_name=pl_name) }}" 
+                   style="color:blue; margin-left:5px;" title="Share this playlist">Share</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="pcreated">No playlists created yet.</p>
+        {% endif %}
+  
+        <form action="{{ url_for('logout') }}" method="get">
+          <button type="submit" class="logout-button">Logout</button>
+        </form>
+      </div>
+    
+      <main class="content">
+        {% if query %}
+          <h2 class="message3">Search results for "{{ query }}":</h2>
+          {% if results %}
+            {% for song in results %}
+              <div class="music-item">
+                <p>{{ song.title }} by "{{ song.artist }}" ({{ song.genre }})</p>
+                <audio controls>
+                  <source src="{{ url_for('static', filename=song.file) }}" type="audio/mpeg" />
+              
+                </audio>
+                {% if playlist_target %}
+                  <a href="{{ url_for('web_interface', username=session['username'], action='addtoplaylist', playlist_target=playlist_target, song_id=song.id) }}" 
+                     class="add-button">Add</a>
+                {% else %}
+                  <form action="/web/{{ session['username'] }}" method="get" style="display:inline;">
+                    <input type="hidden" name="action" value="addtoplaylist" />
+                    <input type="hidden" name="song_id" value="{{ song.id }}" />
+                    <label for="playlist_target">Add to:</label>
+                    <select name="playlist_target">
+                      {% for pl in playlists.keys() %}
+                        <option value="{{ pl }}">{{ pl }}</option>
+                      {% endfor %}
+                    </select>
+                    <button type="submit">Add</button>
+                  </form>
+                {% endif %}
+              </div>
+            {% endfor %}
+          {% else %}
+            <p class="message3">No results found.</p>
+          {% endif %}
+      
+        {% elif action=='viewplaylist' or playlist_name %}
+          <h2 class="message3">Playlist: {{ playlist_name }}</h2>
+          {% if results %}
+            {% for song in results %}
+              <div class="music-item">
+                <p>{{ song.title }} by "{{ song.artist }}"</p>
+                <audio controls>
+                  <source src="{{ url_for('static', filename=song.file) }}" type="audio/mpeg" />
+                </audio>
+                <a href="{{ url_for('web_interface', username=session['username'], action='remove_from_playlist', playlist_name=playlist_name, song_id=song.id) }}">Remove</a>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p>No songs in this playlist yet.</p>
+          {% endif %}
+          <a href="{{ url_for('web_interface', username=session['username'], action='allmusic', playlist_target=playlist_name) }}" class="add-button">Add</a>
+      
+        {% elif action=='allmusic' %}
+          <h2 class="message3">All Available Music</h2>
+          {% if results %}
+            {% for song in results %}
+              <div class="music-item">
+                <p>{{ song.title }} by "{{ song.artist }}" ({{ song.genre }})</p>
+                <audio controls class="song-audio">
+                  <source src="{{ url_for('static', filename=song.file) }}" type="audio/mpeg" />
+                </audio>
+                <form action="/web/{{ session['username'] }}" method="get" style="display:inline;">
+                  <input type="hidden" name="action" value="addtoplaylist" />
+                  <input type="hidden" name="song_id" value="{{ song.id }}" />
+                  <label for="playlist_target">Add to:</label>
+                  <select name="playlist_target">
+                    {% for pl in playlists.keys() %}
+                      <option value="{{ pl }}">{{ pl }}</option>
+                    {% endfor %}
+                  </select>
+                  <button type="submit">Add</button>
+                </form>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p class="message3">No music available.</p>
+          {% endif %}
+        
+        {% elif genre %}
+        <h2 class="message3">Music Genre: {{ genre }}</h2>
+        <a href="{{ url_for('share_genre', username=session['username'], genre=genre) }}" title="Share Genre" class="share-genre-button">Share Genre</a>
+        
+          {% if results %}
+            {% for song in results %}
+              <div class="music-item">
+                <p>{{ song.title }} by "{{ song.artist }}" ({{ song.genre }})</p>
+                <audio controls>
+                  <source src="{{ url_for('static', filename=song.file) }}" type="audio/mpeg" />
+              
+                </audio>
+                <form action="/web/{{ session['username'] }}" method="get" style="display:inline;">
+                  <input type="hidden" name="action" value="addtoplaylist" />
+                  <input type="hidden" name="song_id" value="{{ song.id }}" />
+                  <label for="playlist_target">Add to:</label>
+                  <select name="playlist_target">
+                    {% for pl in playlists.keys() %}
+                      <option value="{{ pl }}">{{ pl }}</option>
+                    {% endfor %}
+                  </select>
+                  <button type="submit">Add</button>
+                </form>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p class="message3">No songs found for this genre.</p>
+          {% endif %}
+        
+        {% elif action == 'searchartist' and search_results %}
+          <h2>Artists Found</h2>
+          <ul>
+            {% for artist in search_results %}
+              <li>
+                <a href="{{ url_for('web_interface', username=session['username'], action='artistmusic', artist_name=artist) }}">
+                  {{ artist }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% elif action == 'searchartist' %}
+          <p>No artists found.</p>
+          <h3>Share this Artist Playlist:</h3>
+          <form>
+            <p>Copy the URL below to share this artist playlist:</p>
+            <input type="text" id="shareURL" class="share-url" value="{{ request.url }}" readonly onclick="this.select();">
+            <button type="button" onclick="copyURL()">Copy URL</button>
+          </form>
+          
+        
+        {% elif action == 'artistmusic' %}
+          <h2>Music by {{ artist_name }}</h2>
+          {% for song in artist_songs %}
+            <div class="music-item">
+              <p>{{ song.title }}</p>
+              <audio controls>
+                <source src="{{ url_for('static', filename=song.file) }}" type="audio/mpeg" />
+            
+              </audio>
+            </div>
+          {% endfor %}
+          <h3>Share this Artist Playlist:</h3>
+          <form action="{{ url_for('web_interface', username=session['username']) }}" method="get">
+            <input type="hidden" name="action" value="shareartist">
+            <input type="hidden" name="artist_name" value="{{ artist_name }}">
+            <input type="text" name="friend_username" placeholder="Enter friend's username" required>
+            <button type="submit">Share</button>
+          </form>
+        
+        {% else %}
+          <section class="recent-played">
+            <h2>Recent Played Music</h2>
+            <ul>
+              {% if recent_songs %}
+                {% for song in recent_songs %}
+                  <li>
+                    <div class="song-info">
+                      <span class="song-title">{{ song.title }}</span>
+                      by 
+                      <span class="song-artist">"{{ song.artist }}"</span>
+                      (<span class="song-genre">{{ song.genre }}</span>)
+                    </div>
+                    <audio controls>
+                      <source src="{{ url_for('static', filename=song.file) }}" type="audio/mpeg" />
+                  
+                    </audio>
+                  </li>
+                {% endfor %}
+              {% else %}
+                <li class="no-songs">No recently played music.</li>
+              {% endif %}
+            </ul>
+          </section>
+          <section class="rc">
+            <section class="suggested-music">
+              <h2>Suggested Music</h2>
+              <ul>
+                {% if suggested_songs %}
+                  {% for song in suggested_songs %}
+                    <li>
+                      <div class="song-info">
+                        <span class="song-title">{{ song.title }}</span> 
+                        by 
+                        <span class="song-artist">"{{ song.artist }}"</span>
+                        (<span class="song-genre">{{ song.genre }}</span>)
+                      </div>
+                      <audio controls>
+                        <source src="{{ url_for('static', filename=song.file) }}" type="audio/mpeg" />
+                    
+                      </audio>
+                    </li>
+                  {% endfor %}
+                {% else %}
+                  <li class="no-songs">No suggested music available.</li>
+                {% endif %}
+              </ul>
+              <a href="{{ url_for('web_interface', username=session['username'], action='allmusic') }}" class="view-more">View All Music Available</a>
+            </section>
+          </section>
+        {% endif %}
+      </main>
+      
+      <div id="deleteConfirm" class="confirm" style="display:none;">
+        <div class="confirmcontent">
+          <span class="close" onclick="closeConfirm()">&times;</span>
+          <p id="MiniwindowText">Are you sure you want to delete this playlist?</p>
+          <button onclick="confirmDeletion()">Yes</button>
+          <button onclick="noDeletion()">No</button>
+        </div>
+      </div>
+      </div>
+      <header class="footer">
+        <a href="#" class='contactus' value="Contact Us">Contact Us</a>
+        <div class="search-bar">
+          <form action="{{ url_for('web_interface', username=session['username']) }}" method="get">
+            <input type="hidden" name="action" value="search">
+            <input type="text" name="query" placeholder="Search music or artist..." required>
+            <button type="submit">Search</button>
+          </form>
+        </div>
+      </header>
+    </div>
+  </body>
+</html>

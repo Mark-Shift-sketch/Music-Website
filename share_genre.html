@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Share Genre: {{ genre }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    /* Mini window container */
+    .miniwindow {
+      display: none; /* Hidden by default */
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    /* Mini window content */
+    .miniwindow-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 400px;
+      border-radius: 5px;
+    }
+    /* Close button */
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .error-message {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Genre: {{ genre }}</h1>
+    {% if friend_username %}
+      <p>Shared with friend: {{ friend_username }}</p>
+    {% endif %}
+  </header>
+  <main>
+    <h2>Songs in this Genre</h2>
+    <ul>
+      {% for song in songs %}
+        <li>
+          <p>{{ song.title }} by {{ song.artist }}</p>
+          <audio controls>
+            <source src="{{ url_for('static', filename=song.file) }}" type="audio/mpeg">
+          </audio>
+        </li>
+      {% endfor %}
+    </ul>
+    <h3>Share this Genre Playlist</h3>
+    <form>
+      <p>Copy the URL below to share this genre playlist:</p>
+      <input type="text" id="shareURL" class="share-url" value="{{ request.url }}" readonly onclick="this.select();">
+      <button type="button" onclick="copyURL()">Copy URL</button>
+     
+      <button type="button" onclick="openMiniwindow()">Share with a Friend</button>
+      <p>
+        <a href="{{ url_for('dashboard') }}">Return to Dashboard</a>
+      </p>
+    </form>
+  </main>
+
+
+  <div id="friendMiniwindow" class="miniwindow">
+    <div class="miniwindow-content"> 
+      <span class="close" onclick="closeMiniwindow()">&times;</span> 
+      <h2>Share with a Friend</h2>
+      <input type="text" id="friendInput" placeholder="Enter friend's username">
+      <button type="button" onclick="submitFriend()">Share</button>
+      <p id="miniwindowError" class="error-message"></p> 
+    </div>
+  </div>
+
+</body>
+</html>

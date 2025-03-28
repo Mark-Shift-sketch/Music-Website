@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Log In</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+
+</head>
+<body class="loginsignup2">
+  <div class="loginsignup">
+    <form class="loginsignup1" action="/login" method="POST">
+      <h2>Log In</h2>
+      {% if message %}
+        <p class="error-message">{{ message }}</p>
+      {% endif %}
+      <div class="input-container">
+        <input type="text" name="username" placeholder="Username" required>
+      </div>
+      <div class="input-container password-container">
+        <input type="password" id="loginPassword" name="password" placeholder="Password" required>
+        <span id="loginToggle" class="toggle-password" onclick="togglePassword('loginPassword', 'loginToggle')">
+          <img src="{{ url_for('static', filename='eye.png') }}" alt="Show Password">
+        </span>
+      </div>
+      <button type="submit" class="button">Log In</button>
+      <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign up</a></p>
+    </form>
+  </div>
+  <script>
+    function togglePassword(fieldId, toggleId) {
+      var field = document.getElementById(fieldId);
+      var toggle = document.getElementById(toggleId).querySelector("img");
+      
+      if (field.type === "password") {
+        field.type = "text";
+        toggle.src = "{{ url_for('static', filename='hide.png') }}"; 
+        toggle.alt = "Hide Password";
+      } else {
+        field.type = "password";
+        toggle.src = "{{ url_for('static', filename='eye.png') }}";
+        toggle.alt = "Show Password";
+      }
+    }
+  </script>
+</body>
+</html>
